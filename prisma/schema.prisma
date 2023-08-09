@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+//npm i -D prisma
+//npx prisma init
+//npx prisma generate - Do this after creating a new model
+//npx prisma db push - to push to your database.
+//npx prisma migrate reset - to reset your databse.
+//npx prisma studio - to view your data
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  username String @unique
+  image String
+  bio String
+  onboarded Boolean @default(false)
+  communitiesId String[] @db.ObjectId
+
+  threads Thread[]
+  createdCommunities Community[]
+  communities Community[] @relation("members", fields: [communitiesId], references: [id])
+}
+
+model Thread{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  authorId String @db.ObjectId
+  text String
+  communityId String @db.ObjectId
+  createdAt DateTime @default(now())
+
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  community Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+}
+
+model Community{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  username String @unique
+  image String
+  bio String
+  createdById String @db.ObjectId
+  membersIds String[] @db.ObjectId
+
+  createdBy User @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  members User[] @relation("members", fields: [membersIds], references: [id])
+
+  threads Thread[]
+}
