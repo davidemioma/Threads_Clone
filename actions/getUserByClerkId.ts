@@ -1,12 +1,12 @@
 import prismadb from "@/lib/prismadb";
 
-export const getUserById = async (id: string) => {
+export const getUserByClerkId = async (id: string) => {
   try {
     if (!id) return null;
 
-    const user = await prismadb.user.findUnique({
+    const user = await prismadb.user.findFirst({
       where: {
-        id,
+        clerkId: id,
       },
     });
 
