@@ -16,6 +16,9 @@ module.exports = {
       },
     },
     extend: {
+      screens: {
+        xs: "400px",
+      },
       colors: {
         "primary-500": "#877EFF",
         "secondary-500": "#FFB620",

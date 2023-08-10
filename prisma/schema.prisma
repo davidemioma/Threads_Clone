@@ -38,6 +38,7 @@ model Thread{
   authorId String @db.ObjectId
   text String
   communityId String? @db.ObjectId
+  likedIds String[] @db.ObjectId
   createdAt DateTime @default(now())
 
   author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
@@ -53,6 +54,7 @@ model Comment{
   parentId String? @db.ObjectId
   threadId String @db.ObjectId
   communityId String @db.ObjectId
+  likedIds String[] @db.ObjectId
   createdAt DateTime @default(now())
 
   author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
