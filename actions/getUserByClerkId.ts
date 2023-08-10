@@ -10,6 +10,9 @@ export const getUserByClerkId = async (id: string) => {
       where: {
         clerkId: id,
       },
+      include: {
+        communities: true,
+      },
     });
 
     return user;

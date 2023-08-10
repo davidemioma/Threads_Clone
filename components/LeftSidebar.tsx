@@ -16,8 +16,7 @@ const LeftSidebar = () => {
     <div className="hidden md:inline-flex flex-col sticky top-0 left-0 z-20 bg-dark-2 text-light-1 h-screen w-fit pt-24 pb-5 border-r border-r-dark-4 overflow-y-auto">
       <div className="flex-1 flex flex-col gap-6 px-6">
         {sidebarLinks.map((link) => {
-          const isActive =
-            pathname.includes(link.route) || pathname === link.route;
+          const isActive = pathname === link.route;
 
           return (
             <Link
