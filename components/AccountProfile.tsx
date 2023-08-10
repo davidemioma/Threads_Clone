@@ -1,7 +1,6 @@
 "use client";
 
 import React, { ChangeEvent, useState } from "react";
-import axios from "axios";
 import Image from "next/image";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -21,6 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
+import { updateUser } from "@/actions/updateUser";
 
 interface Props {
   user: {
@@ -96,7 +96,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
         }
       }
 
-      await axios.patch("/api/update-profile", values);
+      await updateUser(values);
 
       if (pathname === "/profile/edit") {
         router.back();
