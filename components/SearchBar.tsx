@@ -7,9 +7,10 @@ import { Input } from "./ui/input";
 
 interface Props {
   routeType: string;
+  placeholder: string;
 }
 
-const SearchBar = ({ routeType }: Props) => {
+const SearchBar = ({ routeType, placeholder }: Props) => {
   const router = useRouter();
 
   const [search, setSearch] = useState("");
@@ -42,9 +43,7 @@ const SearchBar = ({ routeType }: Props) => {
         id="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder={`${
-          routeType !== "/search" ? "Search Users" : "Search creators"
-        }`}
+        placeholder={placeholder}
       />
     </div>
   );

@@ -37,7 +37,7 @@ export default async function SearchPage({ searchParams }: Props) {
     <>
       <h1 className="text-2xl font-bold mb-10">Search</h1>
 
-      <SearchBar routeType="search" />
+      <SearchBar routeType="search" placeholder="Search Users..." />
 
       <div className="mt-14 pb-20">
         {result.users.length === 0 ? (
