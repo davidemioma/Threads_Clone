@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import { Textarea } from "./ui/textarea";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { createThread } from "@/actions/createThread";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ThreadData, ThreadValidator } from "@/lib/validators/thread";
 import {
@@ -16,7 +17,6 @@ import {
   FormControl,
   FormMessage,
 } from "./ui/form";
-import { createThread } from "@/actions/createThread";
 
 interface Props {
   userId: string;

@@ -14,27 +14,30 @@ export const getThreads = async ({ pageNumber = 1, pageSize = 20 }: Props) => {
     const threads = await prismadb.thread.findMany({
       skip: skipAmount,
       take: pageSize,
+      where: {
+        isChild: false,
+      },
       orderBy: {
         createdAt: "desc",
       },
       include: {
         author: true,
-        comments: {
-          include: {
-            author: true,
-          },
-        },
       },
     });
 
-    const totalThreads = await prismadb.thread.count();
-
-    const totalPages = Math.ceil(totalThreads / pageSize);
-
-    const hasMorePages = pageNumber < totalPages;
-
-    return { threads, hasMorePages };
+    return threads;
   } catch (err) {
     return [];
   }
+};
+
+export const hasMorePages = async ({
+  pageNumber = 1,
+  pageSize = 20,
+}: Props) => {
+  const totalThreads = await prismadb.thread.count();
+
+  const totalPages = Math.ceil(totalThreads / pageSize);
+
+  const hasMorePages = pageNumber < totalPages;
 };

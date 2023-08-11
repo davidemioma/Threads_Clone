@@ -7,7 +7,11 @@ import { sidebarLinks } from "@/lib/constants";
 import { SignedIn, SignOutButton } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
 
-const LeftSidebar = () => {
+interface Props {
+  userId: string;
+}
+
+const LeftSidebar = ({ userId }: Props) => {
   const router = useRouter();
 
   const pathname = usePathname();
@@ -17,6 +21,10 @@ const LeftSidebar = () => {
       <div className="flex-1 flex flex-col gap-6 px-6">
         {sidebarLinks.map((link) => {
           const isActive = pathname === link.route;
+
+          if (link.route === "/profile") {
+            link.route = `${link.route}/${userId}`;
+          }
 
           return (
             <Link

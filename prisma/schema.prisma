@@ -28,7 +28,6 @@ model User{
   communitiesId String[] @db.ObjectId
 
   threads Thread[]
-  comments Comment[]
   createdCommunities Community[]
   communities Community[] @relation("members", fields: [communitiesId], references: [id])
 }
@@ -37,29 +36,14 @@ model Thread{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   authorId String @db.ObjectId
   text String
+  parentId String? @db.ObjectId
   communityId String? @db.ObjectId
   likedIds String[] @db.ObjectId
+  isChild Boolean @default(false)
   createdAt DateTime @default(now())
 
   author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
   community Community? @relation(fields: [communityId], references: [id], onDelete: Cascade)
-
-  comments Comment[]
-}
-
-model Comment{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  authorId String @db.ObjectId
-  text String
-  parentId String? @db.ObjectId
-  threadId String @db.ObjectId
-  communityId String @db.ObjectId
-  likedIds String[] @db.ObjectId
-  createdAt DateTime @default(now())
-
-  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
-  community Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
 }
 
 model Community{
@@ -76,5 +60,4 @@ model Community{
   members User[] @relation("members", fields: [membersIds], references: [id])
 
   threads Thread[]
-  comments Comment[]
 }
