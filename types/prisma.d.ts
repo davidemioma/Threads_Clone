@@ -6,6 +6,7 @@ export type CurrentUser = User & {
 
 export type ThreadProps = Thread & {
   author: User;
+  community: Community | null;
 };
 
 export type ResultProps = {

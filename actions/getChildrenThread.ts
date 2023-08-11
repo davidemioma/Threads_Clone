@@ -15,6 +15,7 @@ export const getChildrenThread = async (id: string) => {
       },
       include: {
         author: true,
+        community: true,
       },
     });
 

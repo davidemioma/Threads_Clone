@@ -12,6 +12,7 @@ export const getThreadById = async (id: string) => {
       },
       include: {
         author: true,
+        community: true,
       },
     });
 

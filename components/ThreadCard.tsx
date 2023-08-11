@@ -24,7 +24,7 @@ const ThreadCard = ({
 
   const { loading, hasLiked, handleLike } = useLikeThread({
     currentUser,
-    thread,
+    thread: thread!,
   });
 
   useEffect(() => {
@@ -42,12 +42,12 @@ const ThreadCard = ({
       <div className="w-full grid-container gap-4">
         <div className="flex flex-col items-center">
           <Link
-            href={`/profile/${thread.author.clerkId}`}
+            href={`/profile/${thread?.author.clerkId}`}
             className="relative h-10 w-10 rounded-full overflow-hidden"
           >
             <Image
               className="object-cover"
-              src={thread.author.image}
+              src={thread?.author.image!}
               fill
               alt=""
             />

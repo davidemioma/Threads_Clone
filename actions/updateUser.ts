@@ -36,7 +36,7 @@ export const updateUser = async ({
           name,
           username: username.toLowerCase(),
           bio,
-          image: profile_img,
+          image: profile_img || "",
         },
       });
     } else {
@@ -49,7 +49,7 @@ export const updateUser = async ({
           name,
           username: username.toLowerCase(),
           bio,
-          image: profile_img,
+          image: profile_img || "",
           onboarded: true,
         },
       });

@@ -22,6 +22,7 @@ export const getThreads = async ({ pageNumber = 1, pageSize = 20 }: Props) => {
       },
       include: {
         author: true,
+        community: true,
       },
     });
 
@@ -40,4 +41,21 @@ export const hasMorePages = async ({
   const totalPages = Math.ceil(totalThreads / pageSize);
 
   const hasMorePages = pageNumber < totalPages;
+
+  return hasMorePages;
+};
+
+export const getUserThreadCount = async (userId: string) => {
+  try {
+    const totalThreads = await prismadb.thread.count({
+      where: {
+        authorId: userId,
+        isChild: false,
+      },
+    });
+
+    return totalThreads;
+  } catch (err) {
+    return 0;
+  }
 };

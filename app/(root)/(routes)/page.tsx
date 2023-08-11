@@ -1,10 +1,9 @@
 import Empty from "@/components/Empty";
 import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
-import { ThreadProps } from "@/types/prisma";
+import ThreadCard from "@/components/ThreadCard";
 import { getThreads } from "@/actions/getThreads";
 import { getUserByClerkId } from "@/actions/getUserByClerkId";
-import ThreadCard from "@/components/ThreadCard";
 
 const PAGE_NUMBER = 1;
 
@@ -37,7 +36,7 @@ export default async function Home() {
           <Empty text="No threads found" />
         ) : (
           <div className="flex flex-col gap-7">
-            {threads.map((thread: ThreadProps) => (
+            {threads.map((thread) => (
               <ThreadCard
                 key={thread.id}
                 currentUser={userInfo}
