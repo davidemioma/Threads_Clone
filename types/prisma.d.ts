@@ -13,3 +13,8 @@ export type ResultProps = {
   threads: ThreadProps[];
   hasMorePages: boolean;
 };
+
+export interface UserResultProps {
+  users: User[];
+  hasMorePages: boolean;
+}

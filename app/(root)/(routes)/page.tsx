@@ -3,11 +3,8 @@ import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
 import ThreadCard from "@/components/ThreadCard";
 import { getThreads } from "@/actions/getThreads";
+import { PAGE_NUMBER, PAGE_SIZE } from "@/lib/constants";
 import { getUserByClerkId } from "@/actions/getUserByClerkId";
-
-const PAGE_NUMBER = 1;
-
-const PAGE_SIZE = 20;
 
 export default async function Home() {
   const user = await currentUser();

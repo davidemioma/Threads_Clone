@@ -1,3 +1,7 @@
+export const PAGE_NUMBER = 1;
+
+export const PAGE_SIZE = 20;
+
 export const sidebarLinks = [
   {
     imgURL: "/assets/home.svg",
