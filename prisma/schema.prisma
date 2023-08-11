@@ -42,8 +42,8 @@ model Thread{
   isChild Boolean @default(false)
   createdAt DateTime @default(now())
 
-  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  community Community? @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [authorId], references: [id])
+  community Community? @relation(fields: [communityId], references: [id])
 }
 
 model Community{
@@ -56,7 +56,7 @@ model Community{
   createdById String @db.ObjectId
   membersIds String[] @db.ObjectId
 
-  createdBy User @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  createdBy User @relation(fields: [createdById], references: [id])
   members User[] @relation("members", fields: [membersIds], references: [id])
 
   threads Thread[]
