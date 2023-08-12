@@ -108,14 +108,14 @@ const ThreadCard = ({
       {!isComment && thread.community && (
         <Link
           href={`/communities/${thread.community.id}`}
-          className="flex items-center gap-1 mt-5"
+          className="flex items-center gap-1 mt-5 text-xs xs:text-sm"
         >
           <p className="text-subtle-medium text-gray-1">
             {formatDateString(thread.createdAt.toISOString())} -{" "}
             {thread.community.name} Community
           </p>
 
-          <div className="relative w-4 h-4 rounded-full overflow-hidden">
+          <div className="relative flex-shrink-0 w-5 h-5 rounded-full overflow-hidden">
             <Image
               className="object-cover"
               src={thread.community.image}

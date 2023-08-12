@@ -22,10 +22,10 @@ type Event = {
   type: EventType;
 };
 
-const webhookSecret = process.env.NEXT_CLERK_WEBHOOK_SECRET || "";
+const webhookSecret = (process.env.NEXT_CLERK_WEBHOOK_SECRET as string) || "";
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  const payload = await req.json();
 
   const header = headers();
 
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 
   try {
     evnt = wh.verify(
-      JSON.stringify(body),
+      JSON.stringify(payload),
       heads as IncomingHttpHeaders & WebhookRequiredHeaders
     ) as Event;
   } catch (err) {
@@ -157,6 +157,7 @@ export async function POST(req: Request) {
   if (eventType === "organization.deleted") {
     try {
       const { id } = evnt?.data;
+
       console.log("deleted", evnt?.data);
 
       // @ts-ignore

@@ -28,11 +28,7 @@ export const createCommunity = async (
         username,
         image,
         bio,
-        createdBy: {
-          connect: {
-            id: user.id,
-          },
-        },
+        createdById: user.id,
       },
     });
   } catch (err: any) {

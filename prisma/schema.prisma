@@ -28,7 +28,6 @@ model User{
   communitiesId String[] @db.ObjectId
 
   threads Thread[]
-  createdCommunities Community[]
   communities Community[] @relation("members", fields: [communitiesId], references: [id])
 }
 
@@ -55,9 +54,7 @@ model Community{
   bio String
   createdById String @db.ObjectId
   membersIds String[] @db.ObjectId
-
-  createdBy User @relation(fields: [createdById], references: [id])
+  
   members User[] @relation("members", fields: [membersIds], references: [id])
-
   threads Thread[]
 }
