@@ -6,10 +6,14 @@ import { auth } from "@clerk/nextjs";
 interface Props {
   text: string;
   authorId: string;
-  communityId: string | null;
+  communityClerkId: string | null;
 }
 
-export const createThread = async ({ text, authorId, communityId }: Props) => {
+export const createThread = async ({
+  text,
+  authorId,
+  communityClerkId,
+}: Props) => {
   try {
     const { userId } = await auth();
 
@@ -17,7 +21,28 @@ export const createThread = async ({ text, authorId, communityId }: Props) => {
       throw new Error("Unauthorized");
     }
 
-    if (communityId) {
+    const community = await prismadb.community.findFirst({
+      where: {
+        clerkId: communityClerkId!,
+      },
+    });
+
+    if (community) {
+      await prismadb.thread.create({
+        data: {
+          text,
+          author: {
+            connect: {
+              id: authorId,
+            },
+          },
+          community: {
+            connect: {
+              id: community.id,
+            },
+          },
+        },
+      });
     } else {
       await prismadb.thread.create({
         data: {

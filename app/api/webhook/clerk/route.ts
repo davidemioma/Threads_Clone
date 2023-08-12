@@ -22,8 +22,10 @@ type Event = {
   type: EventType;
 };
 
-export const POST = async (request: Request) => {
-  const payload = await request.json();
+const webhookSecret = process.env.NEXT_CLERK_WEBHOOK_SECRET || "";
+
+export async function POST(req: Request) {
+  const body = await req.json();
 
   const header = headers();
 
@@ -33,13 +35,13 @@ export const POST = async (request: Request) => {
     "svix-signature": header.get("svix-signature"),
   };
 
-  const wh = new Webhook(process.env.NEXT_CLERK_WEBHOOK_SECRET || "");
+  const wh = new Webhook(webhookSecret);
 
   let evnt: Event | null = null;
 
   try {
     evnt = wh.verify(
-      JSON.stringify(payload),
+      JSON.stringify(body),
       heads as IncomingHttpHeaders & WebhookRequiredHeaders
     ) as Event;
   } catch (err) {
@@ -173,4 +175,6 @@ export const POST = async (request: Request) => {
       );
     }
   }
-};
+
+  return new NextResponse(null, { status: 200 });
+}

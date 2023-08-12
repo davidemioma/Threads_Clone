@@ -6,6 +6,7 @@ import Image from "next/image";
 import { AiFillHeart } from "react-icons/ai";
 import useLikeThread from "@/hooks/useLikeThread";
 import { CurrentUser, ThreadProps } from "@/types/prisma";
+import { formatDateString } from "@/lib/utils";
 
 interface Props {
   currentUser: CurrentUser | null;
@@ -104,7 +105,26 @@ const ThreadCard = ({
         </div>
       </div>
 
-      {/* <div>booty</div> */}
+      {!isComment && thread.community && (
+        <Link
+          href={`/communities/${thread.community.id}`}
+          className="flex items-center gap-1 mt-5"
+        >
+          <p className="text-subtle-medium text-gray-1">
+            {formatDateString(thread.createdAt.toISOString())} -{" "}
+            {thread.community.name} Community
+          </p>
+
+          <div className="relative w-4 h-4 rounded-full overflow-hidden">
+            <Image
+              className="object-cover"
+              src={thread.community.image}
+              fill
+              alt={thread.community.name}
+            />
+          </div>
+        </Link>
+      )}
     </div>
   );
 };
