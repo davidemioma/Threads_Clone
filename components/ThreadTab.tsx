@@ -35,7 +35,7 @@ const ThreadTab = async ({
   return (
     <div className="mt-9 flex flex-col gap-8">
       {threads.map((thread) => (
-        <ThreadCard thread={thread} currentUser={currentUser} />
+        <ThreadCard key={thread.id} thread={thread} currentUser={currentUser} />
       ))}
     </div>
   );
