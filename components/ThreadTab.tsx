@@ -1,8 +1,9 @@
 import React from "react";
+import ThreadCard from "./ThreadCard";
 import { redirect } from "next/navigation";
 import { CurrentUser, ThreadProps } from "@/types/prisma";
 import { getThreadsByUserId } from "@/actions/getThreadsByUserId";
-import ThreadCard from "./ThreadCard";
+import { getThreadsByCommunityId } from "@/actions/getThreadsByCommunityId";
 
 interface Props {
   value: string;
@@ -20,7 +21,7 @@ const ThreadTab = async ({
   let threads: ThreadProps[];
 
   if (accountType === "Community") {
-    threads = [];
+    threads = await getThreadsByCommunityId(profileId);
   } else {
     threads = await getThreadsByUserId({
       id: profileId,
@@ -34,7 +35,7 @@ const ThreadTab = async ({
 
   return (
     <div className="mt-9 flex flex-col gap-8">
-      {threads.map((thread) => (
+      {threads?.map((thread) => (
         <ThreadCard key={thread.id} thread={thread} currentUser={currentUser} />
       ))}
     </div>

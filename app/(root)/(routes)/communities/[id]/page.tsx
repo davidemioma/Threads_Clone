@@ -1,19 +1,23 @@
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
-import { profileTabs } from "@/lib/constants";
+import UserCard from "@/components/UserCard";
 import ThreadTab from "@/components/ThreadTab";
+import { communityTabs } from "@/lib/constants";
 import ProfileHeader from "@/components/ProfileHeader";
-import { getUserThreadCount } from "@/actions/getThreads";
 import { getUserByClerkId } from "@/actions/getUserByClerkId";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  getCommunityByClerkId,
+  threadsCount,
+} from "@/actions/getCommunityByClerkId";
 
-export default async function ProfilePage({
+export default async function Community({
   params,
 }: {
-  params: { clerkId: string };
+  params: { id: string };
 }) {
-  const { clerkId } = params;
+  const { id } = params;
 
   const user = await currentUser();
 
@@ -21,32 +25,29 @@ export default async function ProfilePage({
     redirect("/sign-in");
   }
 
-  const userInfo = await getUserByClerkId(clerkId);
-
-  const currentUserInfo = await getUserByClerkId(user.id);
-
-  if (!userInfo) {
-    redirect("/");
-  }
+  const userInfo = await getUserByClerkId(user.id);
 
   if (!userInfo?.onboarded) {
     redirect("/onboarding");
   }
 
-  const userThreadCount = await getUserThreadCount(userInfo.id);
+  const community = await getCommunityByClerkId(id);
+
+  const count = await threadsCount(id);
 
   return (
     <div className="h-full w-full pb-20">
       <ProfileHeader
-        userInfo={userInfo}
-        clerkId={clerkId}
-        currentUserClerkId={user.id}
+        userInfo={community!}
+        clerkId={community?.createdById!}
+        currentUserClerkId={userInfo.id}
+        isCommunity
       />
 
       <div className="w-full mt-10">
         <Tabs defaultValue="threads" className="w-full">
           <TabsList className="bg-dark-2 w-full min-h-[50px] flex text-light-2">
-            {profileTabs.map((tab) => (
+            {communityTabs.map((tab) => (
               <TabsTrigger
                 key={tab.label}
                 value={tab.value}
@@ -65,28 +66,30 @@ export default async function ProfilePage({
 
                 {tab.label === "Threads" && (
                   <p className="bg-light-4 px-2 py-0.5 text-light-2 text-xs ml-1 rounded-sm">
-                    {userThreadCount}
+                    {count}
                   </p>
                 )}
               </TabsTrigger>
             ))}
           </TabsList>
 
-          {profileTabs.map((tab) => (
-            <TabsContent
-              key={`content-${tab.label}`}
-              value={tab.value}
-              className="w-full text-light-1"
-            >
-              {/* @ts-ignore */}
-              <ThreadTab
-                value={tab.value}
-                profileId={userInfo.id}
-                currentUser={currentUserInfo}
-                accountType="User"
-              />
-            </TabsContent>
-          ))}
+          <TabsContent value="threads" className="w-full text-light-1">
+            {/* @ts-ignore */}
+            <ThreadTab
+              profileId={community?.id!}
+              currentUser={userInfo}
+              accountType="Community"
+              value=""
+            />
+          </TabsContent>
+
+          <TabsContent value="members" className="w-full text-light-1">
+            <div className="flex flex-col gap-8 mt-9">
+              {community?.members.map((user) => (
+                <UserCard key={user.id} user={user} />
+              ))}
+            </div>
+          </TabsContent>
         </Tabs>
       </div>
     </div>

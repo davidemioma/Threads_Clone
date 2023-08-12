@@ -1,5 +1,9 @@
 import { Thread, User, Community } from "@prisma/client";
 
+export type Community = Community & {
+  members: User[];
+};
+
 export type CurrentUser = User & {
   communities: Community[];
 };
