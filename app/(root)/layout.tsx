@@ -3,6 +3,9 @@ import { currentUser, useAuth } from "@clerk/nextjs";
 import Footer from "@/components/Footer";
 import LeftSidebar from "@/components/LeftSidebar";
 import RightSidebar from "@/components/RightSidebar";
+import { getUserByClerkId } from "@/actions/getUserByClerkId";
+import { getSimilarMinds } from "@/actions/getSimilarMinds";
+import { getSuggestedCommunities } from "@/actions/getSuggestedCommunities";
 
 export default async function PagesLayout({
   children,
@@ -10,6 +13,12 @@ export default async function PagesLayout({
   children: React.ReactNode;
 }) {
   const user = await currentUser();
+
+  const userInfo = await getUserByClerkId(user?.id!);
+
+  const communities = await getSuggestedCommunities({ pageSize: 4 });
+
+  const users = await getSimilarMinds({ userId: userInfo?.id!, pageSize: 4 });
 
   return (
     <>
@@ -22,7 +31,7 @@ export default async function PagesLayout({
           <div className="w-full max-w-4xl">{children}</div>
         </div>
 
-        <RightSidebar />
+        <RightSidebar users={users} communities={communities} />
       </main>
 
       <Footer />

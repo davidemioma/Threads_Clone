@@ -44,13 +44,13 @@ const CommunityCard = ({ community }: Props) => {
           <div className="flex items-center gap-1">
             {community.members.slice(0, 2).map((member, index) => (
               <div
+                key={index}
                 className={`relative w-7 h-7 ${
                   index !== 0 && "-ml-2"
                 } rounded-full overflow-hidden`}
               >
                 <Image
                   className="object-cover"
-                  key={index}
                   src={member.image}
                   fill
                   alt=""

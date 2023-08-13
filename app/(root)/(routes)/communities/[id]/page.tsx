@@ -86,7 +86,7 @@ export default async function Community({
           <TabsContent value="members" className="w-full text-light-1">
             <div className="flex flex-col gap-8 mt-9">
               {community?.members.map((user) => (
-                <UserCard key={user.id} user={user} />
+                <UserCard key={user.id} data={user} />
               ))}
             </div>
           </TabsContent>
