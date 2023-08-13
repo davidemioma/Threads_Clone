@@ -7,9 +7,10 @@ import CommunityCard from "@/components/CommunityCard";
 import { PAGE_NUMBER, PAGE_SIZE } from "@/lib/constants";
 import { getUserByClerkId } from "@/actions/getUserByClerkId";
 import { getSearchedCommunities } from "@/actions/getSearchedCommunities";
+import Pagination from "@/components/Pagination";
 
 interface Props {
-  searchParams: { q: string };
+  searchParams: { q: string; page: string };
 }
 
 export default async function CommunitiesPage({ searchParams }: Props) {
@@ -28,7 +29,7 @@ export default async function CommunitiesPage({ searchParams }: Props) {
   // @ts-ignore
   const result: communityResultProps = await getSearchedCommunities({
     searchQuery: searchParams.q,
-    pageNumber: PAGE_NUMBER,
+    pageNumber: +searchParams.page || PAGE_NUMBER,
     pageSize: PAGE_SIZE,
   });
 
@@ -38,7 +39,7 @@ export default async function CommunitiesPage({ searchParams }: Props) {
 
       <SearchBar routeType="communities" placeholder="Search Communities..." />
 
-      <div className="mt-14 pb-20">
+      <div className="mt-14">
         {result.communities.length === 0 ? (
           <Empty text="No Result" />
         ) : (
@@ -48,6 +49,14 @@ export default async function CommunitiesPage({ searchParams }: Props) {
             ))}
           </div>
         )}
+      </div>
+
+      <div className="w-full pb-20">
+        <Pagination
+          pageNumber={+searchParams.page || PAGE_NUMBER}
+          isNext={result.hasMorePages}
+          path="communities"
+        />
       </div>
     </>
   );

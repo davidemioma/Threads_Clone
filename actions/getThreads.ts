@@ -32,11 +32,15 @@ export const getThreads = async ({ pageNumber = 1, pageSize = 20 }: Props) => {
   }
 };
 
-export const hasMorePages = async ({
+export const getHaveMorePages = async ({
   pageNumber = 1,
   pageSize = 20,
 }: Props) => {
-  const totalThreads = await prismadb.thread.count();
+  const totalThreads = await prismadb.thread.count({
+    where: {
+      isChild: false,
+    },
+  });
 
   const totalPages = Math.ceil(totalThreads / pageSize);
 

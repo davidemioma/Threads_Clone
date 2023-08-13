@@ -2,11 +2,16 @@ import Empty from "@/components/Empty";
 import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
 import ThreadCard from "@/components/ThreadCard";
-import { getThreads } from "@/actions/getThreads";
+import { getHaveMorePages, getThreads } from "@/actions/getThreads";
 import { PAGE_NUMBER, PAGE_SIZE } from "@/lib/constants";
 import { getUserByClerkId } from "@/actions/getUserByClerkId";
+import Pagination from "@/components/Pagination";
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { page: string };
+}) {
   const user = await currentUser();
 
   if (!user) {
@@ -20,7 +25,12 @@ export default async function Home() {
   }
 
   const threads = await getThreads({
-    pageNumber: PAGE_NUMBER,
+    pageNumber: +searchParams.page || PAGE_NUMBER,
+    pageSize: PAGE_SIZE,
+  });
+
+  const hasMorePages = await getHaveMorePages({
+    pageNumber: +searchParams.page || PAGE_NUMBER,
     pageSize: PAGE_SIZE,
   });
 
@@ -28,7 +38,7 @@ export default async function Home() {
     <>
       <h1 className="text-2xl font-bold">Home</h1>
 
-      <div className="mt-9 pb-20">
+      <div className="mt-9">
         {threads.length === 0 ? (
           <Empty text="No threads found" />
         ) : (
@@ -44,6 +54,14 @@ export default async function Home() {
             })}
           </div>
         )}
+      </div>
+
+      <div className="w-full pb-20">
+        <Pagination
+          pageNumber={+searchParams.page || PAGE_NUMBER}
+          isNext={hasMorePages}
+          path="/"
+        />
       </div>
     </>
   );
