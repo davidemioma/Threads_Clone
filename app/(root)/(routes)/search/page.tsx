@@ -45,7 +45,7 @@ export default async function SearchPage({ searchParams }: Props) {
         ) : (
           <div className="flex flex-col gap-7">
             {result.users.map((user) => (
-              <UserCard key={user.id} user={user} />
+              <UserCard key={user.id} data={user} />
             ))}
           </div>
         )}
