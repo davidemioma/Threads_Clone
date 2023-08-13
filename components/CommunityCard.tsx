@@ -42,7 +42,7 @@ const CommunityCard = ({ community }: Props) => {
 
         {community.members.length > 0 && (
           <div className="flex items-center gap-1">
-            {community.members.map((member, index) => (
+            {community.members.slice(0, 2).map((member, index) => (
               <div
                 className={`relative w-7 h-7 ${
                   index !== 0 && "-ml-2"

@@ -33,13 +33,15 @@ export default async function Home() {
           <Empty text="No threads found" />
         ) : (
           <div className="flex flex-col gap-7">
-            {threads.map((thread) => (
-              <ThreadCard
-                key={thread.id}
-                currentUser={userInfo}
-                thread={thread}
-              />
-            ))}
+            {threads.map((thread) => {
+              return (
+                <ThreadCard
+                  key={thread.id}
+                  currentUser={userInfo}
+                  thread={thread}
+                />
+              );
+            })}
           </div>
         )}
       </div>

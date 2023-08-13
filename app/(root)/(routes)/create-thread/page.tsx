@@ -20,7 +20,7 @@ export default async function CreateThread() {
     <>
       <h1 className="text-2xl font-bold">Create Thread</h1>
 
-      <PostThread userId={userInfo.id} />
+      <PostThread userId={userInfo?.id!} />
     </>
   );
 }

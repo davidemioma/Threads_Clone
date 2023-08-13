@@ -21,13 +21,13 @@ export const createThread = async ({
       throw new Error("Unauthorized");
     }
 
-    const community = await prismadb.community.findFirst({
-      where: {
-        clerkId: communityClerkId!,
-      },
-    });
+    if (communityClerkId) {
+      const community = await prismadb.community.findFirst({
+        where: {
+          clerkId: communityClerkId,
+        },
+      });
 
-    if (community) {
       await prismadb.thread.create({
         data: {
           text,
@@ -38,7 +38,7 @@ export const createThread = async ({
           },
           community: {
             connect: {
-              id: community.id,
+              id: community?.id,
             },
           },
         },
