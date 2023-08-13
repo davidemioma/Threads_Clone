@@ -1,10 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Community, CurrentUser } from "@/types/prisma";
+import { CommunityProps, CurrentUser } from "@/types/prisma";
 
 interface Props {
-  userInfo: CurrentUser | Community;
+  userInfo: CurrentUser | CommunityProps;
   clerkId: string;
   currentUserClerkId: string;
   isCommunity?: boolean;

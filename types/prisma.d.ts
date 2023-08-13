@@ -1,6 +1,6 @@
 import { Thread, User, Community } from "@prisma/client";
 
-export type Community = Community & {
+export type CommunityProps = Community & {
   members: User[];
 };
 
@@ -20,5 +20,10 @@ export type ResultProps = {
 
 export interface UserResultProps {
   users: User[];
+  hasMorePages: boolean;
+}
+
+export interface communityResultProps {
+  communities: CommunityProps[];
   hasMorePages: boolean;
 }
