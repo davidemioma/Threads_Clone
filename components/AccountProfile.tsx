@@ -98,6 +98,8 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
 
       await updateUser(values);
 
+      router.refresh();
+
       if (pathname === "/profile/edit") {
         router.back();
       } else {
