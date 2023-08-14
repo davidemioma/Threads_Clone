@@ -13,8 +13,7 @@ const Footer = () => {
     <footer className="md:hidden fixed bottom-0 inset-x-0 z-10 bg-glassmorphism p-4 backdrop-blur-lg rounded-t-3xl">
       <div className="flex items-center justify-between gap-3">
         {sidebarLinks.map((link) => {
-          const isActive =
-            pathname.includes(link.route) || pathname === link.route;
+          const isActive = pathname === link.route;
 
           return (
             <Link

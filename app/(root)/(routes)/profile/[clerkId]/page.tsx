@@ -36,7 +36,7 @@ export default async function ProfilePage({
   const userThreadCount = await getUserThreadCount(userInfo.id);
 
   return (
-    <div className="h-full w-full pb-20">
+    <div className="h-full w-full pb-28">
       <ProfileHeader
         userInfo={userInfo}
         clerkId={clerkId}

@@ -56,7 +56,7 @@ export default async function Home({
         )}
       </div>
 
-      <div className="w-full pb-20">
+      <div className="w-full pb-28">
         <Pagination
           pageNumber={+searchParams.page || PAGE_NUMBER}
           isNext={hasMorePages}

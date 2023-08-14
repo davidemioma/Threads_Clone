@@ -52,7 +52,7 @@ export default async function SearchPage({ searchParams }: Props) {
         )}
       </div>
 
-      <div className="w-full pb-20">
+      <div className="w-full pb-28">
         <Pagination
           pageNumber={+searchParams.page || PAGE_NUMBER}
           isNext={result.hasMorePages}

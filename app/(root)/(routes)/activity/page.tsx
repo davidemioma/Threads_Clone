@@ -25,7 +25,7 @@ export default async function ActivityPage() {
     <>
       <h1 className="text-2xl font-bold">Activity</h1>
 
-      <div className="mt-10 pb-20">
+      <div className="mt-10 pb-28">
         {activities.length > 0 ? (
           <div className="flex flex-col gap-7">
             {activities.map((activity) => (

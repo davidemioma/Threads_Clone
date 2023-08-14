@@ -35,7 +35,7 @@ export default async function Edit({
 
       <p className="mt-3 text-light-2">Make any changes</p>
 
-      <div className="w-full mt-10 pb-20">
+      <div className="w-full mt-10 pb-28">
         <AccountProfile user={userData} btnTitle="Continue" />
       </div>
     </>

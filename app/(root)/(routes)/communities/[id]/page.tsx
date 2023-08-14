@@ -36,7 +36,7 @@ export default async function Community({
   const count = await threadsCount(id);
 
   return (
-    <div className="h-full w-full pb-20">
+    <div className="h-full w-full pb-28">
       <ProfileHeader
         userInfo={community!}
         clerkId={community?.createdById!}

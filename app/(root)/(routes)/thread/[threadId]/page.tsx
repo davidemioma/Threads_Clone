@@ -37,7 +37,7 @@ export default async function ThreadPage({
   const commentsThread = await getChildrenThread(threadId);
 
   return (
-    <div className="flex flex-col gap-10 pb-20">
+    <div className="flex flex-col gap-10 pb-28">
       <ThreadCard thread={thread} currentUser={userInfo} />
 
       <CommentForm
