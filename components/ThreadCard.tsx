@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import DeleteThread from "./DeleteThread";
 import { usePathname } from "next/navigation";
-import { AiFillHeart } from "react-icons/ai";
 import { formatDateString } from "@/lib/utils";
 import useLikeThread from "@/hooks/useLikeThread";
 import { CurrentUser, ThreadProps } from "@/types/prisma";
@@ -93,7 +92,14 @@ const ThreadCard = ({
               <div className="flex items-center gap-3">
                 <button disabled={loading} onClick={handleLike}>
                   {hasLiked ? (
-                    <AiFillHeart className="text-red-500" size={20} />
+                    <div className="relative w-6 h-6 overflow-hidden">
+                      <Image
+                        className="object-cover"
+                        src="/assets/heart-filled.svg"
+                        fill
+                        alt=""
+                      />
+                    </div>
                   ) : (
                     <div className="relative w-6 h-6 overflow-hidden">
                       <Image
