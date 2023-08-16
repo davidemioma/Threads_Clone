@@ -26,6 +26,8 @@ const useLikeThread = ({ currentUser, thread }: Props) => {
     setLoading(true);
 
     try {
+      setHasLiked((prev) => !prev);
+
       await likeThread({
         currentUser,
         threadId: thread.id,
@@ -34,6 +36,8 @@ const useLikeThread = ({ currentUser, thread }: Props) => {
 
       router.refresh();
     } catch (err) {
+      setHasLiked(false);
+
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
